@@ -1,12 +1,12 @@
 # CNAME plugin for Publish
 
-A [Publish](https://github.com/johnsundell/publish) plugin that generates a custom domain name file for any Publush website deployed to Github.
+A [Publish](https://github.com/johnsundell/publish) plugin that generates a custom domain name file for any Publish website deployed to GitHub.
 
 ## Background
 
-When developing your own static website and deploying to Github pages, you will most likely  want to have your own custom domain. This requires having
-a custom domain name file, also known as a `CNAME` in the root directory of your website or the Github repository that your website is hosted on. When generating your site and pushing to Github, the `CNAME` file is removed since [Publish](https://github.com/johnsundell/publish) will always push whatever files are generated in the dedicated `Output` directory. This plugin aims to generate a `CNAME`
-file into the `Output` directory that [Publish](https://github.com/johnsundell/publish) uses for deploying your site to Github.
+When developing your own static website and deploying to GitHub Pages, you will most likely  want to have your own custom domain. This requires having
+a custom domain name file, also known as a `CNAME` in the root directory of your website or the GitHub repository that your website is hosted on. When generating your site and pushing to GitHub, the `CNAME` file is removed since [Publish](https://github.com/johnsundell/publish) will always push whatever files are generated in the dedicated `Output` directory. This plugin aims to generate a `CNAME`
+file into the `Output` directory that [Publish](https://github.com/johnsundell/publish) uses for deploying your site to GitHub.
 
 ## Installation
 
@@ -71,4 +71,4 @@ below:
     <img src="./Assets/output.png">
 </p>
 
-To learn more about custom domains for Github Pages, visit Github's [documentation](https://help.github.com/en/github/working-with-github-pages/managing-a-custom-domain-for-your-github-pages-site) related to managing your own custom domain.
+To learn more about custom domains for GitHub Pages, visit GitHub's [documentation](https://help.github.com/en/github/working-with-github-pages/managing-a-custom-domain-for-your-github-pages-site) related to managing your own custom domain.
