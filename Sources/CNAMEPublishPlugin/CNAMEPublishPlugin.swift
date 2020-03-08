@@ -13,11 +13,11 @@ public extension Plugin {
     /// output directory.
     ///
     /// - Parameter domainNames: A list of domain names to use for the website.
-    static func generateCNAME(with domainNames: String...) -> Self {
+    static func generateCNAME(with domainName: String, _ otherDomainNames: String...) -> Self {
         Plugin(name: "Generate CNAME for custom domain names") { context in
-            guard !domainNames.isEmpty else { return }
+            let allDomainNames = CollectionOfOne(domainName) + otherDomainNames
             
-            let fileContent = domainNames.joined(separator: "\n")
+            let fileContent = allDomainNames.joined(separator: "\n")
             
             try context.createOutputFile(at: "CNAME").write(fileContent)
         }
