@@ -11,7 +11,7 @@ import Publish
 // MARK: - CNAME_Error
 
 /// Supported errors that can occur with CNAME file generation.
-public enum CNAME_Error: LocalizedError {
+enum CNAME_Error: LocalizedError, CustomStringConvertible {
     
     /// The list of provided domain names is empty.
     case listEmpty
@@ -19,7 +19,7 @@ public enum CNAME_Error: LocalizedError {
     /// In the list of provided domain names, there is an empty string.
     case containsEmptyString
     
-    public var localizedDescription: String {
+    var description: String {
         switch self {
         case .listEmpty:
             return "The provided list of domain names are empty. At least one domain name is required for file generation."
@@ -27,28 +27,32 @@ public enum CNAME_Error: LocalizedError {
             return "One of the provided domain names is an empty string."
         }
     }
+    
+    var localizedDescription: String { description }
+    var errorDescription: String? { description }
 }
 
 // MARK: - Plugin
 
 public extension Plugin {
     
-    /// Returns a plugin that creates a custom domain name file from a list of domain names and adds it to the website's
-    /// output directory.
+    /// Returns a plugin that creates a custom domain name file from a given domain name as well as a list of other
+    /// domain names and adds it to the website's output directory.
     ///
-    /// - Parameter domainNames: A list of domain names to use for the website.
+    /// - Parameters:
+    ///   - domainName: The domain name that will be first in the file.
+    ///   - otherDomainNames: A list of other domain names that will come after `domainName`.
+    ///
+    /// - Throws: See [generateCNAME(with domainNames: [String])](x-source-tag://throwingMethod) for errors that can be
+    ///           thrown.
     static func generateCNAME(with domainName: String, _ otherDomainNames: String...) -> Self {
-        Plugin(name: "Generate CNAME for custom domain names") { context in
-            let allDomainNames = CollectionOfOne(domainName) + otherDomainNames
-            
-            let fileContent = allDomainNames.joined(separator: "\n")
-            
-            try context.createOutputFile(at: "CNAME").write(fileContent)
-        }
+        return generateCNAME(with: CollectionOfOne(domainName) + otherDomainNames)
     }
     
     /// Returns a plugin that creates a custom domain name file from a list of domain names and adds it to the website's
     /// output directory.
+    ///
+    /// - Tag: throwingMethod
     ///
     /// - Parameter domainNames: A list of domain names to use for the website.
     ///
