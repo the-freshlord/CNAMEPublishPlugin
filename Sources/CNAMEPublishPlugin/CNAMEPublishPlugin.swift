@@ -47,21 +47,37 @@ public extension Plugin {
         }
     }
     
+    /// Returns a plugin that creates a custom domain name file from a list of domain names and adds it to the website's
+    /// output directory.
+    ///
+    /// - Parameter domainNames: A list of domain names to use for the website.
+    ///
+    /// - Throws:
+    ///      - `CNAME_Error.listEmpty` if the provided list is empty.
+    ///      - `CNAME_Error.containsEmptyString` if one or more of the provided domain names are empty strings.
     static func generateCNAME(with domainNames: [String]) -> Self {
         Plugin(name: "Generate CNAME from provided domain names") { context in
-            guard domainNames.allSatisfy({ !$0.isEmpty }) else { return }
+            guard !domainNames.isEmpty else { throw CNAME_Error.listEmpty }
+            
+            guard domainNames.allSatisfy({ !$0.isEmpty }) else { throw CNAME_Error.containsEmptyString }
+            
+            let fileContent = domainNames.joined(separator: "\n")
+            
+            try context.createOutputFile(at: "CNAME").write(fileContent)
         }
     }
     
     /// Returns a plugin that copies a custom domain name file from the website's resources directory to the website's
     /// output directory.
+    ///
+    /// - Throws: `CNAME_Error.listEmpty` if the provided list from the file is empty.
     static func addCNAME() -> Self {
         Plugin(name: "Generate CNAME from existing CNAME file in the Resources directory") { context in
             let file = try context.file(at: "Resources/CNAME")
             
             let fileContent = try file.readAsString()
             
-            guard !fileContent.isEmpty else { return }
+            guard !fileContent.isEmpty else { throw CNAME_Error.listEmpty }
             
             try context.copyFileToOutput(from: "Resources/CNAME")
         }
