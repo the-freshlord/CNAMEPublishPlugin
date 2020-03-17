@@ -11,7 +11,7 @@ import Publish
 // MARK: - CNAME_Error
 
 /// Supported errors that can occur with CNAME file generation.
-enum CNAME_Error: LocalizedError, CustomStringConvertible {
+enum CNAMEGenerationError: LocalizedError, CustomStringConvertible {
     
     /// The list of provided domain names is empty.
     case listEmpty
@@ -57,13 +57,13 @@ public extension Plugin {
     /// - Parameter domainNames: A list of domain names to use for the website.
     ///
     /// - Throws:
-    ///      - `CNAME_Error.listEmpty` if the provided list is empty.
-    ///      - `CNAME_Error.containsEmptyString` if one or more of the provided domain names are empty strings.
+    ///      - `CNAMEGenerationError.listEmpty` if the provided list is empty.
+    ///      - `CNAMEGenerationError.containsEmptyString` if one or more of the provided domain names are empty strings.
     static func generateCNAME(with domainNames: [String]) -> Self {
         Plugin(name: "Generate CNAME from provided domain names") { context in
-            guard !domainNames.isEmpty else { throw CNAME_Error.listEmpty }
+            guard !domainNames.isEmpty else { throw CNAMEGenerationError.listEmpty }
             
-            guard domainNames.allSatisfy({ !$0.isEmpty }) else { throw CNAME_Error.containsEmptyString }
+            guard domainNames.allSatisfy({ !$0.isEmpty }) else { throw CNAMEGenerationError.containsEmptyString }
             
             let fileContent = domainNames.joined(separator: "\n")
             
@@ -81,7 +81,7 @@ public extension Plugin {
             
             let fileContent = try file.readAsString()
             
-            guard !fileContent.isEmpty else { throw CNAME_Error.listEmpty }
+            guard !fileContent.isEmpty else { throw CNAMEGenerationError.listEmpty }
             
             try context.copyFileToOutput(from: "Resources/CNAME")
         }

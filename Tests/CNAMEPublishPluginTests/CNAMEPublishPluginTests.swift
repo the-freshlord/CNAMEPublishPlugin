@@ -101,7 +101,7 @@ final class CNAMEPublishPluginTests: XCTestCase {
         ) { error in
             let errorDescription = (error as? PublishingError)?.errorDescription ?? ""
             
-            XCTAssertTrue(errorDescription.contains(CNAME_Error.containsEmptyString.localizedDescription))
+            XCTAssertTrue(errorDescription.contains(CNAMEGenerationError.containsEmptyString.localizedDescription))
         }
     }
     
@@ -114,7 +114,7 @@ final class CNAMEPublishPluginTests: XCTestCase {
         ) { error in
             let errorDescription = (error as? PublishingError)?.errorDescription ?? ""
             
-            XCTAssertTrue(errorDescription.contains(CNAME_Error.listEmpty.localizedDescription))
+            XCTAssertTrue(errorDescription.contains(CNAMEGenerationError.listEmpty.localizedDescription))
         }
     }
         
@@ -146,7 +146,7 @@ final class CNAMEPublishPluginTests: XCTestCase {
         ) { error in
             let errorDescription = (error as? PublishingError)?.errorDescription ?? ""
             
-            XCTAssertTrue(errorDescription.contains(CNAME_Error.listEmpty.localizedDescription))
+            XCTAssertTrue(errorDescription.contains(CNAMEGenerationError.listEmpty.localizedDescription))
         }
     }
 }
