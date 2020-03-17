@@ -32,7 +32,7 @@ private struct TestWebsite: Website {
 
 final class CNAMEPublishPluginTests: XCTestCase {
     
-    // MARK: - Private Class Properties
+    // MARK: - Properties
     
     private static var testDirPath: Path {
         let sourceFileURL = URL(fileURLWithPath: #file)
@@ -40,14 +40,13 @@ final class CNAMEPublishPluginTests: XCTestCase {
         return Path(sourceFileURL.deletingLastPathComponent().path)
     }
     
-    // MARK: - Internal Class Properties
-    
     static var allTests = [
-        ("testGeneratedCNAME_WithDomainNames", testGenerateCNAME),
-        ("testGeneratedCNAME_WithFile", testAddCNAME)
+        ("testGeneratedCNAME", testGenerateCNAME),
+        ("testGenerateCNAME_WhenDomainNameIsEmpty", testGenerateCNAME_WhenDomainNameIsEmpty),
+        ("testGenerateCNAME_WhenListOfDomainNamesAreEmpty", testGenerateCNAME_WhenListOfDomainNamesAreEmpty),
+        ("testAddCNAME", testAddCNAME),
+        ("testAddCNAME_WhenFileIsEmpty", testAddCNAME_WhenFileIsEmpty)
     ]
-    
-    // MARK: - Private Instance Properties
     
     private var outputFolder: Folder? {
         try? Folder(path: Self.testDirPath.appendingComponent("Output").absoluteString)
@@ -78,7 +77,7 @@ final class CNAMEPublishPluginTests: XCTestCase {
         try? Folder(path: Self.testDirPath.appendingComponent(".publish").absoluteString).delete()
     }
     
-    // MARK: - Tests
+    // MARK: - Test(s)
     
     func testGenerateCNAME() throws {
         try TestWebsite().publish(at: Self.testDirPath, using: [
@@ -93,6 +92,32 @@ final class CNAMEPublishPluginTests: XCTestCase {
         """)
     }
     
+    func testGenerateCNAME_WhenDomainNameIsEmpty() {
+        XCTAssertThrowsError(
+            try TestWebsite().publish(
+                at: Self.testDirPath,
+                using: [.installPlugin(.generateCNAME(with: ""))]
+            )
+        ) { error in
+            let errorDescription = (error as? PublishingError)?.errorDescription ?? ""
+            
+            XCTAssertTrue(errorDescription.contains(CNAMEGenerationError.containsEmptyString.localizedDescription))
+        }
+    }
+    
+    func testGenerateCNAME_WhenListOfDomainNamesAreEmpty() {
+        XCTAssertThrowsError(
+            try TestWebsite().publish(
+                at: Self.testDirPath,
+                using: [.installPlugin(.generateCNAME(with: []))]
+            )
+        ) { error in
+            let errorDescription = (error as? PublishingError)?.errorDescription ?? ""
+            
+            XCTAssertTrue(errorDescription.contains(CNAMEGenerationError.listEmpty.localizedDescription))
+        }
+    }
+        
     func testAddCNAME() throws {
         try resourcesFolder?
             .createFile(named: "CNAME")
@@ -108,5 +133,20 @@ final class CNAMEPublishPluginTests: XCTestCase {
         test.io
         www.test.io
         """)
+    }
+    
+    func testAddCNAME_WhenFileIsEmpty() throws {
+        try resourcesFolder?.createFile(named: "CNAME")
+        
+        XCTAssertThrowsError(
+            try TestWebsite().publish(
+                at: Self.testDirPath,
+                using: [.installPlugin(.addCNAME())]
+            )
+        ) { error in
+            let errorDescription = (error as? PublishingError)?.errorDescription ?? ""
+            
+            XCTAssertTrue(errorDescription.contains(CNAMEGenerationError.listEmpty.localizedDescription))
+        }
     }
 }
