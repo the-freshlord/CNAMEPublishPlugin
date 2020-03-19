@@ -1,6 +1,31 @@
-# CNAME plugin for Publish
+# CNAME plugin for Publish 🚀
+
+<p align="center">
+    <a href="https://github.com/SwiftyGuerrero/CNAMEPublishPlugin/workflows/Build/badge.svg">
+        <img src="https://github.com/SwiftyGuerrero/CNAMEPublishPlugin/workflows/Build/badge.svg" alt="Build Status">
+    </a>
+    <a href="https://swift.org/">
+        <img src="https://img.shields.io/badge/Swift-5.1-orange.svg?style=flat" alt="Swift">
+    </a>
+	<a href="https://swift.org/package-manager/">
+		<img src="https://img.shields.io/badge/swiftpm-compatible-4BC51D.svg?style=flat" alt="Swift PM Compatible">
+	</a>
+    <img src="https://img.shields.io/badge/platforms-mac+linux-brightgreen.svg?style=flat" alt="Mac + Linux" />
+    <a href="https://twitter.com/SwiftyGuerrero">
+        <img src="https://img.shields.io/badge/twitter-@SwiftyGuerrero-blue.svg?style=flat" alt="Twitter: @SwiftyGuerrero" />
+    </a>
+</p>
+
+----------------
 
 A [Publish](https://github.com/johnsundell/publish) plugin that generates a custom domain name file for any Publish website deployed to GitHub.
+
+## Table of Contents
+
+- [Background](#background)
+- [Install](#install)
+- [Usage](#usage)
+- [Contribute](#contribute)
 
 ## Background
 
@@ -8,7 +33,7 @@ When developing your own static website and deploying to GitHub Pages, you will 
 a custom domain name file, also known as a `CNAME` in the root directory of your website or the GitHub repository that your website is hosted on. When generating your site and pushing to GitHub, the `CNAME` file is removed since [Publish](https://github.com/johnsundell/publish) will always push whatever files are generated in the dedicated `Output` directory. This plugin aims to generate a `CNAME`
 file into the `Output` directory that [Publish](https://github.com/johnsundell/publish) uses for deploying your site to GitHub.
 
-## Installation
+## Install
 
 To install it into your [Publish](https://github.com/johnsundell/publish) package, add it as a dependency within your `Package.swift` manifest:
 ```swift
@@ -72,3 +97,13 @@ below:
 </p>
 
 To learn more about custom domains for GitHub Pages, visit GitHub's [documentation](https://help.github.com/en/github/working-with-github-pages/managing-a-custom-domain-for-your-github-pages-site) related to managing your own custom domain.
+
+## Contribute
+
+CNAMEPublishPlugin is developed completely in the open, and your contributions are more than welcome.
+
+Before getting started, spend some time checking the internal implementation and documentation so you'll be ready to tackle any issues or edge cases that you might encounter.
+
+This project does not come with GitHub Issues-based support, and users are instead encouraged to become active participants in its continued development — by fixing any bugs that they encounter, or by improving the documentation wherever it’s found to be lacking.
+
+Thank you and enjoy :100:
