@@ -1,4 +1,4 @@
-// swift-tools-version:5.1
+// swift-tools-version:5.6
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 /**
@@ -11,6 +11,7 @@ import PackageDescription
 
 let package = Package(
     name: "CNAMEPublishPlugin",
+    platforms: [.macOS(.v12)],
     products: [
         .library(
             name: "CNAMEPublishPlugin",
@@ -18,12 +19,14 @@ let package = Package(
         )
     ],
     dependencies: [
-        .package(url: "https://github.com/johnsundell/publish.git", from: "0.4.0")
+        .package(url: "https://github.com/johnsundell/publish.git", .upToNextMajor(from: "0.4.0"))
     ],
     targets: [
         .target(
             name: "CNAMEPublishPlugin",
-            dependencies: ["Publish"]
+            dependencies: [
+                .product(name: "Publish", package: "publish")
+            ]
         ),
         .testTarget(
             name: "CNAMEPublishPluginTests",
