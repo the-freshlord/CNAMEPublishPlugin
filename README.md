@@ -41,7 +41,7 @@ let package = Package(
     ...
     dependencies: [
         ...
-        .package(url: "https://github.com/SwiftyGuerrero/CNAMEPublishPlugin", from: "0.1.0")
+        .package(name: "CNAMEPublishPlugin", url: "https://github.com/SwiftyGuerrero/CNAMEPublishPlugin", from: "0.1.0")
     ],
     targets: [
         .target(
